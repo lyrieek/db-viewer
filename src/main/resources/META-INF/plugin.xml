@@ -1,0 +1,33 @@
+<idea-plugin>
+	<id>com.lyrieek</id>
+	<name>DB Viewer</name>
+	<version>0.0.1</version>
+	<vendor email="dummy" url="dummy">dummy</vendor>
+	<description>数据库可视化，目前支持PostgreSQL和Oracle，查看表，视图，存储过程与函数</description>
+
+	<depends>com.intellij.modules.lang</depends>
+	<idea-version since-build="191" until-build="221.*"/>
+	<extensions defaultExtensionNs="com.intellij">
+		<toolWindow id="DB" icon="AllIcons.Debugger.Db_db_object" anchor="right"
+					factoryClass="com.lyrieek.dbViewer.view.DBToolWindowFactory"/>
+		<applicationService
+				serviceImplementation="com.lyrieek.dbViewer.services.AppSettingsService"/>
+		<applicationConfigurable
+				id="DBSettingsConfigurable"
+				parentId="tools"
+				instance="com.lyrieek.dbViewer.services.DBSettingsConfigurable"/>
+		<notification.group id="DB Viewer"/>
+		<fileEditorProvider implementation="com.lyrieek.dbViewer.view.editor.TableViewProvider"/>
+		<fileTypeFactory implementation="com.lyrieek.dbViewer.view.editor.DBFileType"/>
+		<lang.parserDefinition language="SQLs" implementationClass="com.lyrieek.dbViewer.fileType.parse.SQLSParserDefinition"/>
+	</extensions>
+
+	<actions>
+		<group id="DBVPlugin.Test" text="Greeting" description="Greeting menu"
+			   icon="com.lyrieek.dbViewer.SdkIcons.defaultIcon">
+			<add-to-group group-id="ToolsMenu" anchor="last"/>
+			<action id="DB.Alert" class="com.lyrieek.dbViewer.MainAction" text="Hello" description="Says hello"/>
+		</group>
+	</actions>
+
+</idea-plugin>
