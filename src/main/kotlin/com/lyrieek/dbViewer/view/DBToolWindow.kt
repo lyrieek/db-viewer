@@ -27,26 +27,19 @@ import javax.swing.tree.DefaultMutableTreeNode
 class DBToolWindow(private val project: Project) {
 
     private val dbToolWindowContent: JBPanel<DBToolWindowPanel> =
-        JBPanel<DBToolWindowPanel>(BorderLayout())//GridLayout(0, 2)
+        JBPanel<DBToolWindowPanel>(BorderLayout())
 
     private val searchBox = JBTextField()
 
     private var searchBoxDisplay = false
 
-//    constructor(project: Project, toolWindow: ToolWindow) {
-//        //toolWindow.hide(null)
-//        reader(project)
-//    }
-
     fun reader() {
         dbToolWindowContent.removeAll()
         val nodes = DefaultMutableTreeNode("db")
-//        val nodes = DefaultTreeModel()
         val basicDBData = DataQueryFactory.basicDBData()
         nodes.add(loadNode(BasicDBDataType.TABLE.name, basicDBData.tables()))
         nodes.add(loadNode(BasicDBDataType.VIEW.name, basicDBData.views()))
         nodes.add(loadNode(BasicDBDataType.FUNCTION.name, basicDBData.functions()))
-//        nodes.add(loadNode(BasicDBDataType.EXT_FUNCTION.name, basicDBData.functions()))
         nodes.add(loadNode(BasicDBDataType.PROCEDURE.name, basicDBData.procedure()))
         val tree = Tree(nodes)
         tree.isRootVisible = false

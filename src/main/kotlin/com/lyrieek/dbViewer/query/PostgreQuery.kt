@@ -34,11 +34,10 @@ class PostgreQuery : BasicDBData {
     override fun findObj(type: BasicDBDataType): String {
         when (type) {
             BasicDBDataType.FUNCTION -> {
-//                ConnectPool.connect.query("SELECT pg_get_functiondef(oid) FROM pg_proc where PRONAMESPACE=(SELECT oid FROM pg_namespace where nspName = 'public') and prosrc!='aggregate_dummy' and prolang != 13 order by proname")
                 ConnectPool.connect.query(
                     "SELECT pg_get_functiondef(oid) FROM\n" +
                             "\tpg_proc where PRONAMESPACE=(SELECT oid FROM pg_namespace where nspName = 'public')" +
-                            "\tand prosrc!='aggregate_dummy' and prolang != 13 and PROKIND = 'f' order by proname"
+                            "\tand proSrc!='aggregate_dummy' and proLang != 13 and proKind = 'f' order by proName"
                 )
                 return ConnectPool.connect.arr().joinToString("\n")
             }
@@ -46,7 +45,7 @@ class PostgreQuery : BasicDBData {
                 ConnectPool.connect.query(
                     "SELECT pg_get_functiondef(oid) FROM\n" +
                             "\tpg_proc where PRONAMESPACE=(SELECT oid FROM pg_namespace where nspName = 'public')" +
-                            "\tand prosrc!='aggregate_dummy' and prolang != 13 and PROKIND = 'p' order by proname"
+                            "\tand proSrc!='aggregate_dummy' and proLang != 13 and proKind = 'p' order by proName"
                 )
                 return ConnectPool.connect.arr().joinToString("\n")
             }

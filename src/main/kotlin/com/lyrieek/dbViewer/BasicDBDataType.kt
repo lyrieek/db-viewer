@@ -11,7 +11,7 @@ enum class BasicDBDataType {
     EXT_FUNCTION("扩展函数"),
     PROCEDURE("存储过程");
 
-    val viewName: String
+    private val viewName: String
     val fileType: FileType
 
     constructor(viewName: String) {

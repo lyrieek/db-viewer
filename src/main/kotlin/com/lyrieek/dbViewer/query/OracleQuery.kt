@@ -21,21 +21,25 @@ class OracleQuery : BasicDBData {
     }
 
     override fun functions(): MutableList<String> {
-        ConnectPool.connect.query("SELECT P.OBJECT_NAME||'.'||P.PROCEDURE_NAME FROM ALL_PROCEDURES P\n" +
-                "LEFT OUTER JOIN USER_ARGUMENTS A ON A.PACKAGE_NAME=P.OBJECT_NAME AND A.OBJECT_NAME=P.PROCEDURE_NAME AND A.ARGUMENT_NAME IS NULL AND A.DATA_LEVEL=0\n" +
-                "WHERE P.OWNER=SYS_CONTEXT('USERENV','CURRENT_SCHEMA') \n" +
-                "AND P.PROCEDURE_NAME IS NOT NULL AND A.OBJECT_NAME IS NOT NULL\n" +
-                "ORDER BY P.OBJECT_NAME,P.PROCEDURE_NAME")
+        ConnectPool.connect.query(
+            "SELECT P.OBJECT_NAME||'.'||P.PROCEDURE_NAME FROM ALL_PROCEDURES P\n" +
+                    "LEFT OUTER JOIN USER_ARGUMENTS A ON A.PACKAGE_NAME=P.OBJECT_NAME AND A.OBJECT_NAME=P.PROCEDURE_NAME AND A.ARGUMENT_NAME IS NULL AND A.DATA_LEVEL=0\n" +
+                    "WHERE P.OWNER=SYS_CONTEXT('USERENV','CURRENT_SCHEMA') \n" +
+                    "AND P.PROCEDURE_NAME IS NOT NULL AND A.OBJECT_NAME IS NOT NULL\n" +
+                    "ORDER BY P.OBJECT_NAME,P.PROCEDURE_NAME"
+        )
         return ConnectPool.connect.arr()
     }
 
     override fun procedure(): MutableList<String> {
-        ConnectPool.connect.query("\n" +
-                "SELECT P.OBJECT_NAME||'.'||P.PROCEDURE_NAME FROM ALL_PROCEDURES P\n" +
-                "LEFT OUTER JOIN USER_ARGUMENTS A ON A.PACKAGE_NAME=P.OBJECT_NAME AND A.OBJECT_NAME=P.PROCEDURE_NAME AND A.ARGUMENT_NAME IS NULL AND A.DATA_LEVEL=0\n" +
-                "WHERE P.OWNER=SYS_CONTEXT('USERENV','CURRENT_SCHEMA') \n" +
-                "AND P.PROCEDURE_NAME IS NOT NULL AND A.OBJECT_NAME IS NULL\n" +
-                "ORDER BY P.OBJECT_NAME,P.PROCEDURE_NAME")
+        ConnectPool.connect.query(
+            "\n" +
+                    "SELECT P.OBJECT_NAME||'.'||P.PROCEDURE_NAME FROM ALL_PROCEDURES P\n" +
+                    "LEFT OUTER JOIN USER_ARGUMENTS A ON A.PACKAGE_NAME=P.OBJECT_NAME AND A.OBJECT_NAME=P.PROCEDURE_NAME AND A.ARGUMENT_NAME IS NULL AND A.DATA_LEVEL=0\n" +
+                    "WHERE P.OWNER=SYS_CONTEXT('USERENV','CURRENT_SCHEMA') \n" +
+                    "AND P.PROCEDURE_NAME IS NOT NULL AND A.OBJECT_NAME IS NULL\n" +
+                    "ORDER BY P.OBJECT_NAME,P.PROCEDURE_NAME"
+        )
         return ConnectPool.connect.arr()
     }
 
